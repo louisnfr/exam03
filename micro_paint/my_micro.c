@@ -9,7 +9,7 @@ int		H;
 char	BC;
 char	**TAB;
 
-typedef struct s_draw
+typedef struct s_dw
 {
 	char	t;
 	float	x;
@@ -17,7 +17,7 @@ typedef struct s_draw
 	float	w;
 	float	h;
 	char	c;
-}	t_draw;
+}	t_dw;
 
 int	error(FILE *fd, int err)
 {
@@ -38,7 +38,7 @@ int	error(FILE *fd, int err)
 	return (err);
 }
 
-int in_rect(float x, float y, t_draw dw)
+int in_rect(float x, float y, t_dw dw)
 {
 	if ((((x < dw.x) || (dw.x + dw.w < x)) || (y < dw.y)) || (dw.y + dw.h < y))
 		return (0);
@@ -50,7 +50,7 @@ int in_rect(float x, float y, t_draw dw)
 
 int	main(int ac, char **av)
 {
-	t_draw	dw;
+	t_dw	dw;
 	FILE 	*fd;
 	int		res;
 	int		rect;
@@ -92,11 +92,4 @@ int	main(int ac, char **av)
 	}
 	return (error(fd, 2));
 }
-
-
-
-
-
-
-
 

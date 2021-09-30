@@ -9,14 +9,14 @@ int		H;
 char	BC;
 char	**TAB;
 
-typedef struct s_draw
+typedef struct s_dw
 {
 	char	t;
 	float	x;
 	float	y;
 	float	r;
 	char	c;	
-}	t_draw;
+}	t_dw;
 
 int	error(FILE *fd, int err)
 {
@@ -39,7 +39,7 @@ int	error(FILE *fd, int err)
 
 int	main(int ac, char **av)
 {
-	t_draw	draw;
+	t_dw	dw;
 	FILE	*fd;
 	float	sqr;
 	int		res;
@@ -61,18 +61,18 @@ int	main(int ac, char **av)
 				}
 				while (1)
 				{
-					res = fscanf(fd, "\n%c %f %f %f %c", &draw.t, &draw.x, &draw.y, &draw.r, &draw.c);
+					res = fscanf(fd, "\n%c %f %f %f %c", &dw.t, &dw.x, &dw.y, &dw.r, &dw.c);
 					if (res == -1)
 						return (error(fd, 0));
-					else if (res != 5 || draw.r <= 0 || (draw.t != 'c' && draw.t != 'C'))
+					else if (res != 5 || dw.r <= 0 || (dw.t != 'c' && dw.t != 'C'))
 						break ;
 					for (int line = 0; line < H; line++)
 					{
 						for (int col = 0; col < W; col++)
 						{
-							sqr = sqrtf((col - draw.x) * (col - draw.x) + (line - draw.y) * (line - draw.y));
-							if (sqr <= draw.r)
-								TAB[line][col] = draw.c;
+							sqr = sqrtf((col - dw.x) * (col - dw.x) + (line - dw.y) * (line - dw.y));
+							if (sqr <= dw.r)
+								TAB[line][col] = dw.c;
 						}
 					}
 				}
@@ -81,10 +81,4 @@ int	main(int ac, char **av)
 	}
 	return (error(fd, 2));
 }
-
-
-
-
-
-
 
