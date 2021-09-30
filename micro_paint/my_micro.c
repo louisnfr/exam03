@@ -44,20 +44,9 @@ int in_rect(float x, float y, t_draw dw)
 		return (0);
 	if (((x - dw.x < 1.00000000) || ((dw.x + dw.w) - x < 1.00000000)) ||
 		((y - dw.y < 1.00000000 || ((dw.y + dw.h) - y < 1.00000000))))
-		return (2); // Border
-	return (1);		// Inside
+		return (2);
+	return (1);
 }
-
-/*
-int	in_rect(float line, float col, t_draw dw)
-{
-	if (col < dw.x || dw.x + dw.w < col || line < dw.y || dw.y + dw.h < line)
-		return (0);
-	if (col - dw.x < 1 || dw.x + dw.w - col < 1 || line - dw.y < 1 || dw.y + dw.h - line < 1)
-		return (1);
-	return (2);
-}
-*/
 
 int	main(int ac, char **av)
 {
