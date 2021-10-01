@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 int		W;
 int		H;
@@ -14,16 +14,17 @@ typedef struct s_dw
 	char	t;
 	float	x;
 	float	y;
-	float	r;
-	char	c;	
+	float	w;
+	float	h;
+	char	c;
 }	t_dw;
 
 int	error(FILE *fd, int err)
 {
 	if (err == 2 && (err = 1))
-		write(1, "Error: Operation file corrupted\n", 33);
+		write (1, "Error: Operation file corrupted\n", 33);
 	else if (err == 1)
-		write(1, "Error: argument\n", 16);
+		write (1, "Error: argument\n", 16);
 	else
 	{
 		for (int i = 0; i < H; i++)
@@ -37,11 +38,21 @@ int	error(FILE *fd, int err)
 	return (err);
 }
 
+int in_rect(float x, float y, t_dw dw)
+{
+	if ((((x < dw.x) || (dw.x + dw.w < x)) || (y < dw.y)) || (dw.y + dw.h < y))
+		return (0);
+	if (((x - dw.x < 1.00000000) || ((dw.x + dw.w) - x < 1.00000000)) ||
+		((y - dw.y < 1.00000000 || ((dw.y + dw.h) - y < 1.00000000))))
+		return (2); // Border
+	return (1);		// Inside
+}
+
 int	main(int ac, char **av)
 {
 	t_dw	dw;
 	FILE	*fd;
-	float	sqr;
+	int		rect;
 	int		res;
 
 	fd = NULL;
@@ -49,7 +60,7 @@ int	main(int ac, char **av)
 		return (error(fd, 1));
 	if (fd = fopen(av[1], "r"))
 	{
-		if ((res = fscanf(fd, "%d %d %c", &W, &H, &BC)) == 3)
+		if ((res = fscanf(fd, "%d %d %c", &W, &H, &BC)) == 3)	
 		{
 			if (W > 0 && W <= 300 && H > 0 && H <= 300)
 			{
@@ -61,17 +72,17 @@ int	main(int ac, char **av)
 				}
 				while (1)
 				{
-					res = fscanf(fd, "\n%c %f %f %f %c", &dw.t, &dw.x, &dw.y, &dw.r, &dw.c);
+					res = fscanf(fd, "\n%c %f %f %f %f %c", &dw.t, &dw.x, &dw.y, &dw.w, &dw.h, &dw.c);
 					if (res == -1)
 						return (error(fd, 0));
-					else if (res != 5 || dw.r <= 0 || (dw.t != 'c' && dw.t != 'C'))
+					if (res != 6 || dw.w <= 0 || dw.h <= 0 || (dw.t != 'r' && dw.t != 'R'))
 						break ;
 					for (int line = 0; line < H; line++)
 					{
 						for (int col = 0; col < W; col++)
 						{
-							sqr = sqrtf((col - dw.x) * (col - dw.x) + (line - dw.y) * (line - dw.y));
-							if (sqr <= dw.r)
+							rect = in_rect(col, line, dw);
+							if (rect == 2 || ((rect == 1 || rect == 2) && dw.t == 'R'))
 								TAB[line][col] = dw.c;
 						}
 					}
@@ -81,4 +92,13 @@ int	main(int ac, char **av)
 	}
 	return (error(fd, 2));
 }
+
+
+
+
+
+
+
+
+
 
