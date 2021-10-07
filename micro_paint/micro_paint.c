@@ -40,12 +40,11 @@ int	error(FILE *fd, int err)
 
 int in_rect(float x, float y, t_dw dw)
 {
-	if ((((x < dw.x) || (dw.x + dw.w < x)) || (y < dw.y)) || (dw.y + dw.h < y))
+	if (y < dw.x || dw.x + dw.w < y || x < dw.y || dw.y + dw.h < x)
 		return (0);
-	if (((x - dw.x < 1.00000000) || ((dw.x + dw.w) - x < 1.00000000)) ||
-		((y - dw.y < 1.00000000 || ((dw.y + dw.h) - y < 1.00000000))))
-		return (2); // Border
-	return (1);		// Inside
+	if (y - dw.x < 1 || dw.x + dw.w - y < 1 || x - dw.y < 1 || dw.y + dw.h - x < 1)
+		return (1);
+	return (2);
 }
 
 int	main(int ac, char **av)
@@ -81,8 +80,8 @@ int	main(int ac, char **av)
 					{
 						for (int col = 0; col < W; col++)
 						{
-							rect = in_rect(col, line, dw);
-							if (rect == 2 || ((rect == 1 || rect == 2) && dw.t == 'R'))
+							rect = in_rect(line, col, dw);
+							if (rect == 1 || ((rect == 1 || rect == 2) && dw.t == 'R'))
 								TAB[line][col] = dw.c;
 						}
 					}

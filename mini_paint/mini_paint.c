@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 
 int		W;
 int		H;
@@ -37,44 +37,13 @@ int	error(FILE *fd, int err)
 	return (err);
 }
 
-float square(float a)
-{
-	return (a * a);
-}
-
-float sq_dist(float x1, float y1, float x2, float y2)
-{
-	float dist_x;
-	float dist_y;
-
-	dist_x = square(x1 - x2);
-	dist_y = square(y1 - y2);
-	return (dist_x + dist_y);
-}
-
-int in_circle(float x, float y, t_dw dw)
-{
-	float distance;
-	float distance_sqrt;
-
-	distance_sqrt = sqrtf(sq_dist(x, y, dw.x, dw.y));
-	distance = distance_sqrt - dw.r;
-	if (distance <= 0.00000000)
-	{
-		if (distance <= -1.00000000)
-			return (1); // Inside
-		return (2);		// Border
-	}
-	return (0);
-}
-
 int	main(int ac, char **av)
 {
 	t_dw	dw;
 	FILE	*fd;
-	int		sqr;
 	int		res;
-
+	int		sqr;
+	
 	fd = NULL;
 	if (ac != 2)
 		return (error(fd, 1));
@@ -95,15 +64,16 @@ int	main(int ac, char **av)
 					res = fscanf(fd, "\n%c %f %f %f %c", &dw.t, &dw.x, &dw.y, &dw.r, &dw.c);
 					if (res == -1)
 						return (error(fd, 0));
-					if (res != 5 || dw.r <= 0 || (dw.t != 'c' && dw.t != 'C'))
+					else if (res != 5 || dw.r <= 0 || (dw.t != 'c' && dw.t != 'C'))
 						break ;
 					for (int line = 0; line < H; line++)
 					{
 						for (int col = 0; col < W; col++)
 						{
-							sqr = in_circle(col, line, dw);
-							if (sqr == 2 || ((sqr == 1 || sqr == 2) && dw.t == 'C'))
-								TAB[line][col] = dw.c;
+							sqr = sqrtf(powf(col - dw.x, 2) + powf(line - dw.y, 2));
+							if (sqr <= dw.r)
+								if ((sqr + 1 > dw.r && dw.t == 'c') || dw.t == 'C')
+									TAB[line][col] = dw.c;
 						}
 					}
 				}
@@ -112,28 +82,3 @@ int	main(int ac, char **av)
 	}
 	return (error(fd, 2));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
