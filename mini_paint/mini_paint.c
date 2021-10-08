@@ -56,9 +56,8 @@ int	main(int ac, char **av)
 				TAB = malloc(sizeof(char *) * H);
 				for (int i = 0; i < H; i++)
 				{
-					TAB[i] = malloc(sizeof(char) * (W + 1));
+					TAB[i] = malloc(sizeof(char) * W);
 					memset(TAB[i], BC, W);
-					TAB[W] = 0;
 				}
 				while (1)
 				{
