@@ -72,7 +72,7 @@ int	main(int ac, char **av)
 						{
 							sqr = sqrtf(powf(col - dw.x, 2) + powf(line - dw.y, 2));
 							if (sqr <= dw.r)
-								if (sqr + 1 > dw.r && dw.t == 'c')
+								if ((sqr + 1 > dw.r && dw.t == 'c') || dw.t == 'C')
 									TAB[line][col] = dw.c;
 						}
 					}
