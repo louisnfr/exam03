@@ -42,7 +42,7 @@ int	main(int ac, char **av)
 	t_dw	dw;
 	FILE	*fd;
 	int		res;
-	int		sqr;
+	float	sqr;
 	
 	fd = NULL;
 	if (ac != 2)
@@ -56,8 +56,9 @@ int	main(int ac, char **av)
 				TAB = malloc(sizeof(char *) * H);
 				for (int i = 0; i < H; i++)
 				{
-					TAB[i] = malloc(sizeof(char) * W);
+					TAB[i] = malloc(sizeof(char) * (W + 1));
 					memset(TAB[i], BC, W);
+					TAB[W] = 0;
 				}
 				while (1)
 				{
@@ -72,7 +73,7 @@ int	main(int ac, char **av)
 						{
 							sqr = sqrtf(powf(col - dw.x, 2) + powf(line - dw.y, 2));
 							if (sqr <= dw.r)
-								if ((sqr + 1 > dw.r && dw.t == 'c') || dw.t == 'C')
+								if (sqr + 1 > dw.r && dw.t == 'c')
 									TAB[line][col] = dw.c;
 						}
 					}
