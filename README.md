@@ -1,6 +1,6 @@
 # exam rank 03
 
-###### validated on 8 Nov. 2021 ✔️
+[![jaeskim's 42Project Score](https://badge42.herokuapp.com/api/project/lraffin/ft_printf)](https://github.com/JaeSeoKim/badge42)
 
 ### exam subject
 draw given shapes in the terminal given an area
