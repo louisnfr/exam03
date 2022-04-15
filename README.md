@@ -1,6 +1,6 @@
 # exam rank 03
 
-[![jaeskim's 42Project Score](https://badge42.herokuapp.com/api/project/lraffin/ft_printf)](https://github.com/JaeSeoKim/badge42)
+[![lraffin's 42 Exam Rank 03 Score](https://badge42.vercel.app/api/v2/cl1i27ilm001109l1ep0jx30g/project/2362304)](https://github.com/JaeSeoKim/badge42)
 
 ### exam subject
 draw given shapes in the terminal given an area
